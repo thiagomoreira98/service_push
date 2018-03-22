@@ -1,0 +1,4 @@
+ip: 192.168.7.12
+database: teste
+user: sqlhomolog
+pass: 1eng@ENG
