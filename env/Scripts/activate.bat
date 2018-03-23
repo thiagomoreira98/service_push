@@ -1,5 +1,5 @@
 @echo off
-set "VIRTUAL_ENV=C:\Users\THIAGO~1\Workspace\poc_worker"
+set "VIRTUAL_ENV=C:\Workspace\python_mssql\env"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
@@ -9,7 +9,7 @@ if defined _OLD_VIRTUAL_PROMPT (
     )
     set "_OLD_VIRTUAL_PROMPT=%PROMPT%"
 )
-set "PROMPT=(poc_worker) %PROMPT%"
+set "PROMPT=(env) %PROMPT%"
 
 REM Don't use () to avoid problems with them in %PATH%
 if defined _OLD_VIRTUAL_PYTHONHOME goto ENDIFVHOME
