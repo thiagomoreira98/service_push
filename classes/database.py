@@ -7,6 +7,7 @@ class Database(object):
     user = ''
     password = ''
     database = ''
+    rows = []
 
     def __init__(self, config):
         self.driver = config['driver']
@@ -25,14 +26,22 @@ class Database(object):
             connection = pyodbc.connect(self.getConnectionString())
             cursor = connection.cursor()
             cursor.execute(query)
-            # for row in cursor.fetchall():
-            #     print(row.nome)
-            #     print(row.sobrenome)
-            return cursor.fetchall()
+            # return cursor.fetchall()
+            queryResult = cursor.fetchall()
+            self.setRows(queryResult)
+            return self.getRows()
         except pyodbc.DatabaseError as err:
             print(err.args)
-            # cursor.execute("ROLLBACK")
         finally:
             cursor.close()
             del cursor
             connection.close()
+
+
+    def setRows(self, queryResult):
+        # self.rows = list(queryResult)
+        for row in queryResult:
+            self.rows.append(list(row))
+
+    def getRows(self):
+        return self.rows

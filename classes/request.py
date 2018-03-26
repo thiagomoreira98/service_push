@@ -7,6 +7,7 @@ class Request(object):
     port = ''
     method = ''
     route = ''
+    response = None
 
     def __init__(self, config):
         self.host = config['host']
@@ -21,11 +22,26 @@ class Request(object):
             http = HTTPConnection(self.host, self.port)
             http.request(self.method, self.route, self.body, self.headers)
             response = http.getresponse()
-            return {
-                "status": response.status,
-                "content": response.read()
-            }
+            return self.handler(response)
         except Exception as ex:
             print(f'ex-request:', ex)
+            return ex
         finally:
             http.close()
+
+    def handler(self, response):
+        self.response = response.read()
+        if response.status == 200:
+            return self.response
+
+        elif response.status == 404:
+            return {
+                "status": 404,
+                "message": 'A operação solicitada não foi encontrada.'
+            }
+
+        elif response.status == 500:
+            return {
+                "status": 500,
+                "content": self.response
+            }
