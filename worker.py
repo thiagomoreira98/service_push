@@ -1,40 +1,28 @@
+# arquivo com as configurações do worker
+from config.settings import *
+
 # classe para configurar o banco
-from database import Database
+from classes.database import Database
 
 # classe para configurar o request
-from request import Request
-
-# config do banco
-sql = {
-    "driver": '{ODBC Driver 13 for SQL Server}',
-    "server": 'localhos',
-    "database": 'VethosPen',
-    "user": 'sa',
-    "password": 'vethos@1tecnologia'
-}
+from classes.request import Request
 
 # conectando com o banco
-db = Database(sql)
+db = Database(config['sql'])
 results = db.execute('SELECT * FROM seguranca.usuario;')
-# print(results)
+print(results)
 
 req = Request({
-    "host": "localhost",
-    "port": 1234,
+    "host": config['api']['host'],
+    "port": config['api']['port'],
     "method": 'GET',
-    "route": '/ping'
+    "route": '/pin',
+    "headers": { "token": 'xxx', "Content-Type": 'application/json' },
+    "body": {}
 })
 
 response = req.request()
 print(response)
-
-# h1 = HTTPConnection('localhost', 7002)
-# h1.request('GET', '/ping')
-# response = h1.getresponse()
-# data = response.read()
-# print(response.status, ' ', response.reason)
-# print(data)
-# print(data[0]["message"], ' ', data["data"])
 
 # body = json.dumps(obj)
 # print(obj)

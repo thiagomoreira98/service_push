@@ -25,9 +25,10 @@ class Database(object):
             connection = pyodbc.connect(self.getConnectionString())
             cursor = connection.cursor()
             cursor.execute(query)
-            for row in cursor.fetchall():
-                print(row.nome)
-                print(row.sobrenome)
+            # for row in cursor.fetchall():
+            #     print(row.nome)
+            #     print(row.sobrenome)
+            return cursor.fetchall()
         except pyodbc.DatabaseError as err:
             print(err.args)
             # cursor.execute("ROLLBACK")
