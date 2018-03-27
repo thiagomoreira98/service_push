@@ -1,6 +1,8 @@
 # biblioteca para usar o HTTP
 from http.client import HTTPConnection
 
+# helper para gerar log de erro
+from src.helpers import log
 
 class Request(object):
     host = ''
@@ -24,8 +26,8 @@ class Request(object):
             response = http.getresponse()
             return self.handler(response)
         except Exception as ex:
-            print(f'ex-request:', ex)
-            return ex
+            log.generateLog(str(ex))
+            raise ex
         finally:
             http.close()
 
@@ -41,6 +43,8 @@ class Request(object):
             }
 
         elif response.status == 500:
+            print(self.response['b'])
+            # log.generateLog(str(self.response))
             return {
                 "status": 500,
                 "content": self.response

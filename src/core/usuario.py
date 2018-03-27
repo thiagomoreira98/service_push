@@ -38,4 +38,6 @@ def push():
     }
 
     req = Request(options)
-    req.request()
+    response = req.request()
+    print(response['status'])
+    print(response['content'])

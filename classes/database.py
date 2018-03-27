@@ -1,7 +1,8 @@
 # biblioteca para conexão com o banco
 import pyodbc
 
-import json
+# helper para gerar log de erro
+from src.helpers import log
 
 class Database(object):
     driver = ''
@@ -28,23 +29,19 @@ class Database(object):
             connection = pyodbc.connect(self.getConnectionString())
             cursor = connection.cursor()
             cursor.execute(query)
-            # return cursor.fetchall()
             queryResult = cursor.fetchall()
             self.setRows(queryResult)
             return self.getRows()
-        except pyodbc.DatabaseError as err:
-            print(err.args)
-        finally:
+        except pyodbc.DatabaseError as ex:
+            log.generateLog(str(ex))
+            raise ex
+        else:
             cursor.close()
             del cursor
             connection.close()
 
-
     def setRows(self, queryResult):
         self.rows = list(queryResult)
-        # for row in queryResult:
-            # print(json.dumps(row))
-            # self.rows.append(json.dumps(row))
 
     def getRows(self):
         return self.rows
