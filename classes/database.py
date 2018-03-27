@@ -5,15 +5,15 @@ import pyodbc
 from src.helpers import log
 
 class Database(object):
-    driver = ''
+    driver = '{ODBC Driver 13 for SQL Server}'
     server = ''
+    # port = 0
     user = ''
     password = ''
     database = ''
     rows = []
 
     def __init__(self, config):
-        self.driver = config['driver']
         self.server = config['server']
         self.user = config['user']
         self.password = config['password']
@@ -30,11 +30,13 @@ class Database(object):
             cursor = connection.cursor()
             cursor.execute(query)
             queryResult = cursor.fetchall()
+            print(queryResult)
             self.setRows(queryResult)
             return self.getRows()
         except pyodbc.DatabaseError as ex:
-            log.generateLog(str(ex))
-            raise ex
+            log.generate(str(ex))
+            print('-------------------------------------------------')
+            print('Ocorreram erros durante a execução - Verifique os logs')
         else:
             cursor.close()
             del cursor

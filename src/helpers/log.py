@@ -1,6 +1,6 @@
 import datetime
 
-def generateLog(err):
+def generate(err):
     try:
         f = open('./logs/log_'+getTime()+'.txt', 'w')
         f.write(str(err))

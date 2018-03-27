@@ -1,13 +1,14 @@
+import json
+
 config = {
-    "sql": {
-        "driver": '{ODBC Driver 13 for SQL Server}',
-        "server": 'localhost',
-        "database": 'VethosPen',
-        "user": 'sa',
-        "password": 'vethos@1tecnologia'
-    },
+    "sql": { },
     "api": {
         "host": 'localhost',
         "port": 1234
     }
 }
+
+def readJSON():
+    f = open('banco.json', 'r')
+    config['sql'] = json.loads(f.read())
+    f.close()
