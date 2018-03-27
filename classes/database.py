@@ -1,6 +1,8 @@
 # biblioteca para conexão com o banco
 import pyodbc
 
+import json
+
 class Database(object):
     driver = ''
     server = ''
@@ -39,9 +41,10 @@ class Database(object):
 
 
     def setRows(self, queryResult):
-        # self.rows = list(queryResult)
-        for row in queryResult:
-            self.rows.append(list(row))
+        self.rows = list(queryResult)
+        # for row in queryResult:
+            # print(json.dumps(row))
+            # self.rows.append(json.dumps(row))
 
     def getRows(self):
         return self.rows

@@ -9,20 +9,24 @@ from classes.database import Database
 
 import datetime
 
+import json
+
 def selecionar():
     db = Database(config['sql'])
     rows = db.execute('SELECT * FROM seguranca.usuario;')
-    print(rows)
     
+    lista = []
     for row in rows:
-        row.dataCadastro = None
-        print(row.dataCadastro)
+        obj = {}
+        obj['id'] = row.id
+        obj['nome'] = row.nome
+        lista.append(obj)
+        # row.dataCadastro = None
 
-    return rows
+    return lista
 
 def push():
     usuarios = selecionar()
-    print(usuarios)
 
     options = {
         "host": config['api']['host'],
@@ -30,7 +34,7 @@ def push():
         "method": 'POST',
         "route": '/ping',
         "headers": { "token": 'xxx', "Content-Type": 'application/json' },
-        "body": {}# usuarios
+        "body": json.dumps(usuarios)
     }
 
     req = Request(options)
